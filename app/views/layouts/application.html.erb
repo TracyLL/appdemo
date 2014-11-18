@@ -27,6 +27,12 @@
       </div>
     </header>
     <div class="container">
+      <!--message begin-->
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+      <!--message begin-->
+
       <%= yield %>
     
 	    <footer class="footer">
@@ -42,7 +48,9 @@
 		    </ul>
 		  </nav>
 		</footer>
+    <%= debug(params) if Rails.env.development? %>
 	</div>
+
 
 </body>
 </html>
