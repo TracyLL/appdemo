@@ -15,6 +15,10 @@ module SessionsHelper
     @current_user ||= User.find_by(remember_token: remember_token)
   end
 
+  def current_user?(user)
+    user == current_user
+  end
+
   def signed_in?
     !current_user.nil?
   end
@@ -26,5 +30,18 @@ module SessionsHelper
     self.current_user = nil
     cookies.delete(:remember_token)
   end
+
+
+  def redirect_back_or(default)
+    redirect_to(session[:return_to] || default)#redirect_to how to use this method?the parameter is ?  if all of the params are not null, then?
+    session.delete(:return_to)
+  end
+
+  def store_location
+    session[:return_to] = request.fullpath if request.get?
+  end
+
+  #??the scope of helper's method?  is it true that each controller can access those methond?
+  #?? what is 具名路由？
 
 end
